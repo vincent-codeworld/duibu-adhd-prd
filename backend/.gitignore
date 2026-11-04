@@ -1,0 +1,25 @@
+# Local env / secrets (keep .env.example tracked)
+.env
+.env.*
+!.env.example
+
+# Build / test artifacts
+.bin/
+bin/
+dist/
+tmp/
+*.exe
+*.test
+*.out
+coverage.out
+coverage.html
+__debug_bin*
+
+# OS / IDE
+.DS_Store
+.idea/
+.vscode/
+
+# Local screenshot upload blobs (UPLOAD_DIR / STORE)
+data/
+uploads/

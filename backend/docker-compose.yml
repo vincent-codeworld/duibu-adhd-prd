@@ -1,0 +1,19 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: duibu
+      POSTGRES_PASSWORD: duibu
+      POSTGRES_DB: duibu
+    ports:
+      - "5432:5432"
+    volumes:
+      - duibu_pg:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U duibu"]
+      interval: 3s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  duibu_pg:

@@ -1,0 +1,693 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		00B551FBF6C2756FFE96AFFA /* ColorSmokeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F96A3A76F710BE3F280A42 /* ColorSmokeUITests.swift */; };
+		041AFE25657AA54FD44D38FF /* DomainModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE69B42274E50CAF146DA73 /* DomainModels.swift */; };
+		07E67B47537BC2B4484D9E6B /* EditStagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E11C6CEC321A7A001786D5B /* EditStagesView.swift */; };
+		0DC43A15833A3023C5DD0665 /* ScreenshotFlowUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17E35E7E061860DB2658D576 /* ScreenshotFlowUITests.swift */; };
+		0F91C1719033392FA80A2062 /* EditTaskMetaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2ACA774B99FC5D313705DFFB /* EditTaskMetaView.swift */; };
+		116191E71BDF5C699A72D1EE /* TaskService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 728DBFBF731C742B1E5513AA /* TaskService.swift */; };
+		183121AB0C2C0DFE32C54FE1 /* ReportVerificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916ED4ED9614249E1CA4F3D5 /* ReportVerificationView.swift */; };
+		1C71865BD638DFD76702F66A /* StageEditTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184003BE6F59E91706C7A083 /* StageEditTests.swift */; };
+		23D9AEC6D63897D583804AD4 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214ADF5490B961B7B7ECD9C6 /* RootView.swift */; };
+		2D34075C0E9E9AD91254D85B /* PatchProgressUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5EACF0267EC42C611D33AA /* PatchProgressUITests.swift */; };
+		4073416C864D6D1435D341ED /* TaskProgressTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB84B4B9DAB84B52E3B3CAAD /* TaskProgressTests.swift */; };
+		44192C88A5889A28474C3839 /* VerificationHubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 546FD20079E20F77FA6F11D3 /* VerificationHubView.swift */; };
+		4DFFCEB74F0F2469885C01CA /* ReminderService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7ED6EB90B90C16B0728C4B5 /* ReminderService.swift */; };
+		59FE886D1329F2F4309146D7 /* TaskSyncModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FB15C70D120D8F86107840 /* TaskSyncModels.swift */; };
+		5B2B495009244B47DBA3401A /* MedicalDisclaimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A82BD361389F92967342776F /* MedicalDisclaimerView.swift */; };
+		6A46F9AE207895BF58F08EC9 /* APIConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84262ED49CD98C726D26FC2B /* APIConfig.swift */; };
+		726147726BA0B2D221F9823F /* FriendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1713C1957ECB5282CFEE2A7F /* FriendsView.swift */; };
+		77C52FC4F7F583E65E2FC554 /* UploadConsentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341CDCCBF453D7B16FA854E5 /* UploadConsentView.swift */; };
+		7A54A7A7540F4B1147D95CA1 /* RewardEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCAED34FC4C9CBADC1A00E43 /* RewardEditorView.swift */; };
+		8DA7B2EF2D04DE0278667476 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53411AEF6678E29A02C944FA /* APIClient.swift */; };
+		8F957BAF9A36ED41A108D78A /* CreateTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3635139F23DD06DDA601C9E /* CreateTaskView.swift */; };
+		8FE199294FC83CE4522932EB /* NoticesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6037AB8D0564A51A7A78ABA7 /* NoticesView.swift */; };
+		994A4BF15B80D2D5CA203CDD /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51FF376B9D8E92DD4917AE14 /* Theme.swift */; };
+		A1E96EDB1D194991C90AAD97 /* AIBreakdownService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A648B4D1955063854BAFFF /* AIBreakdownService.swift */; };
+		A3899BA1C26D199910639529 /* TaskListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD68760EE34B836A5454C10D /* TaskListView.swift */; };
+		BC97C412A210BFF68C3BA4AA /* TaskDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137A3CF77CD51037F04B46F3 /* TaskDetailView.swift */; };
+		BEDCD0C7919BC47FA30A029C /* RequestVerificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1035483E346458C2730CE74 /* RequestVerificationView.swift */; };
+		D427CD14FD98D35A99A31A88 /* DuibuApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7645FFF20803BD08A7A5BBAD /* DuibuApp.swift */; };
+		DD6F834F5B522B976DA5CAB8 /* MeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99BE7F6540773CC8C9D62534 /* MeView.swift */; };
+		F35168B294B83284A9450974 /* ScreenshotPrep.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC135673DCD3A67C44463B3 /* ScreenshotPrep.swift */; };
+		F5C71C3CF383BC49B1EBFD67 /* LocalStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15ED74F9942B25CA8541B5CC /* LocalStore.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		B5B52C7BBD3AEF03DA220150 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 45E5D8BAAEFF0A37F6A8E595 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E212F9B86793542CF9AB010B;
+			remoteInfo = Duibu;
+		};
+		E29BF0C7680DD0F56C3549AF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 45E5D8BAAEFF0A37F6A8E595 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E212F9B86793542CF9AB010B;
+			remoteInfo = Duibu;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		137A3CF77CD51037F04B46F3 /* TaskDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetailView.swift; sourceTree = "<group>"; };
+		15ED74F9942B25CA8541B5CC /* LocalStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStore.swift; sourceTree = "<group>"; };
+		1713C1957ECB5282CFEE2A7F /* FriendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsView.swift; sourceTree = "<group>"; };
+		17E35E7E061860DB2658D576 /* ScreenshotFlowUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenshotFlowUITests.swift; sourceTree = "<group>"; };
+		184003BE6F59E91706C7A083 /* StageEditTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StageEditTests.swift; sourceTree = "<group>"; };
+		186E967965859D3AA326DFA7 /* Duibu.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Duibu.entitlements; sourceTree = "<group>"; };
+		214ADF5490B961B7B7ECD9C6 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		26F96A3A76F710BE3F280A42 /* ColorSmokeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorSmokeUITests.swift; sourceTree = "<group>"; };
+		2ACA774B99FC5D313705DFFB /* EditTaskMetaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTaskMetaView.swift; sourceTree = "<group>"; };
+		341CDCCBF453D7B16FA854E5 /* UploadConsentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadConsentView.swift; sourceTree = "<group>"; };
+		3B5EACF0267EC42C611D33AA /* PatchProgressUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatchProgressUITests.swift; sourceTree = "<group>"; };
+		43A2634EF4FAA3B7B523A62F /* DuibuTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = DuibuTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		51FF376B9D8E92DD4917AE14 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		53411AEF6678E29A02C944FA /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
+		546FD20079E20F77FA6F11D3 /* VerificationHubView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationHubView.swift; sourceTree = "<group>"; };
+		56A648B4D1955063854BAFFF /* AIBreakdownService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIBreakdownService.swift; sourceTree = "<group>"; };
+		5E11C6CEC321A7A001786D5B /* EditStagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditStagesView.swift; sourceTree = "<group>"; };
+		6037AB8D0564A51A7A78ABA7 /* NoticesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticesView.swift; sourceTree = "<group>"; };
+		728DBFBF731C742B1E5513AA /* TaskService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskService.swift; sourceTree = "<group>"; };
+		7645FFF20803BD08A7A5BBAD /* DuibuApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DuibuApp.swift; sourceTree = "<group>"; };
+		84262ED49CD98C726D26FC2B /* APIConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIConfig.swift; sourceTree = "<group>"; };
+		84FB15C70D120D8F86107840 /* TaskSyncModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskSyncModels.swift; sourceTree = "<group>"; };
+		90C4B83BA81B9168634E5339 /* Duibu.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Duibu.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		916ED4ED9614249E1CA4F3D5 /* ReportVerificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportVerificationView.swift; sourceTree = "<group>"; };
+		99BE7F6540773CC8C9D62534 /* MeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeView.swift; sourceTree = "<group>"; };
+		9EE69B42274E50CAF146DA73 /* DomainModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainModels.swift; sourceTree = "<group>"; };
+		A82BD361389F92967342776F /* MedicalDisclaimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicalDisclaimerView.swift; sourceTree = "<group>"; };
+		AD68760EE34B836A5454C10D /* TaskListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListView.swift; sourceTree = "<group>"; };
+		B3635139F23DD06DDA601C9E /* CreateTaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTaskView.swift; sourceTree = "<group>"; };
+		BCC135673DCD3A67C44463B3 /* ScreenshotPrep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenshotPrep.swift; sourceTree = "<group>"; };
+		D54B45D0D114B84B6F88EB0A /* DuibuUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = DuibuUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D7ED6EB90B90C16B0728C4B5 /* ReminderService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderService.swift; sourceTree = "<group>"; };
+		DCAED34FC4C9CBADC1A00E43 /* RewardEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewardEditorView.swift; sourceTree = "<group>"; };
+		F1035483E346458C2730CE74 /* RequestVerificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestVerificationView.swift; sourceTree = "<group>"; };
+		FB84B4B9DAB84B52E3B3CAAD /* TaskProgressTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskProgressTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		0A8E488A4360A4955A5EA24F = {
+			isa = PBXGroup;
+			children = (
+				45378D6C2485C090363F5D14 /* Duibu */,
+				7A2E401C0F509EBA0A74AA3F /* DuibuTests */,
+				7673426582D0E0D84409B220 /* DuibuUITests */,
+				176C5626B21FCD77A876916C /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		10899DB7425CB0FACFC4D3AC /* Me */ = {
+			isa = PBXGroup;
+			children = (
+				1713C1957ECB5282CFEE2A7F /* FriendsView.swift */,
+				99BE7F6540773CC8C9D62534 /* MeView.swift */,
+				6037AB8D0564A51A7A78ABA7 /* NoticesView.swift */,
+			);
+			path = Me;
+			sourceTree = "<group>";
+		};
+		176C5626B21FCD77A876916C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				90C4B83BA81B9168634E5339 /* Duibu.app */,
+				43A2634EF4FAA3B7B523A62F /* DuibuTests.xctest */,
+				D54B45D0D114B84B6F88EB0A /* DuibuUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		1CE1ED1B9C1237C5772E01F5 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				56A648B4D1955063854BAFFF /* AIBreakdownService.swift */,
+				D7ED6EB90B90C16B0728C4B5 /* ReminderService.swift */,
+				BCC135673DCD3A67C44463B3 /* ScreenshotPrep.swift */,
+				728DBFBF731C742B1E5513AA /* TaskService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		3ADE59B36BDA5798E85DDE0C /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				53411AEF6678E29A02C944FA /* APIClient.swift */,
+				84262ED49CD98C726D26FC2B /* APIConfig.swift */,
+				84FB15C70D120D8F86107840 /* TaskSyncModels.swift */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		45378D6C2485C090363F5D14 /* Duibu */ = {
+			isa = PBXGroup;
+			children = (
+				186E967965859D3AA326DFA7 /* Duibu.entitlements */,
+				7645FFF20803BD08A7A5BBAD /* DuibuApp.swift */,
+				214ADF5490B961B7B7ECD9C6 /* RootView.swift */,
+				51FF376B9D8E92DD4917AE14 /* Theme.swift */,
+				BC77ACB3F70AF88BC006C156 /* Features */,
+				B3AC9C12D206426B4CD4738E /* Models */,
+				3ADE59B36BDA5798E85DDE0C /* Networking */,
+				87A60D16D70F688C9DF39EF8 /* Persistence */,
+				1CE1ED1B9C1237C5772E01F5 /* Services */,
+			);
+			path = Duibu;
+			sourceTree = "<group>";
+		};
+		7673426582D0E0D84409B220 /* DuibuUITests */ = {
+			isa = PBXGroup;
+			children = (
+				26F96A3A76F710BE3F280A42 /* ColorSmokeUITests.swift */,
+				3B5EACF0267EC42C611D33AA /* PatchProgressUITests.swift */,
+				17E35E7E061860DB2658D576 /* ScreenshotFlowUITests.swift */,
+			);
+			path = DuibuUITests;
+			sourceTree = "<group>";
+		};
+		7A2E401C0F509EBA0A74AA3F /* DuibuTests */ = {
+			isa = PBXGroup;
+			children = (
+				184003BE6F59E91706C7A083 /* StageEditTests.swift */,
+				FB84B4B9DAB84B52E3B3CAAD /* TaskProgressTests.swift */,
+			);
+			path = DuibuTests;
+			sourceTree = "<group>";
+		};
+		87A60D16D70F688C9DF39EF8 /* Persistence */ = {
+			isa = PBXGroup;
+			children = (
+				15ED74F9942B25CA8541B5CC /* LocalStore.swift */,
+			);
+			path = Persistence;
+			sourceTree = "<group>";
+		};
+		9291BFBE4A70F90A08D0E878 /* Verifications */ = {
+			isa = PBXGroup;
+			children = (
+				916ED4ED9614249E1CA4F3D5 /* ReportVerificationView.swift */,
+				546FD20079E20F77FA6F11D3 /* VerificationHubView.swift */,
+			);
+			path = Verifications;
+			sourceTree = "<group>";
+		};
+		B3AC9C12D206426B4CD4738E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				9EE69B42274E50CAF146DA73 /* DomainModels.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		BC77ACB3F70AF88BC006C156 /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				10899DB7425CB0FACFC4D3AC /* Me */,
+				F05857A4B2722C3CBFDDE7EA /* Onboarding */,
+				F1F3B1FC5F0D324125FDF810 /* Tasks */,
+				9291BFBE4A70F90A08D0E878 /* Verifications */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+		F05857A4B2722C3CBFDDE7EA /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				A82BD361389F92967342776F /* MedicalDisclaimerView.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		F1F3B1FC5F0D324125FDF810 /* Tasks */ = {
+			isa = PBXGroup;
+			children = (
+				B3635139F23DD06DDA601C9E /* CreateTaskView.swift */,
+				5E11C6CEC321A7A001786D5B /* EditStagesView.swift */,
+				2ACA774B99FC5D313705DFFB /* EditTaskMetaView.swift */,
+				F1035483E346458C2730CE74 /* RequestVerificationView.swift */,
+				DCAED34FC4C9CBADC1A00E43 /* RewardEditorView.swift */,
+				137A3CF77CD51037F04B46F3 /* TaskDetailView.swift */,
+				AD68760EE34B836A5454C10D /* TaskListView.swift */,
+				341CDCCBF453D7B16FA854E5 /* UploadConsentView.swift */,
+			);
+			path = Tasks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		2475442BD29FA284900E58BB /* DuibuTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EF16361CF516EEFCFEE3DEFC /* Build configuration list for PBXNativeTarget "DuibuTests" */;
+			buildPhases = (
+				B57492CA0C2ADE8E15AE09B2 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				84176FEC0FFDB777F9C5C324 /* PBXTargetDependency */,
+			);
+			name = DuibuTests;
+			packageProductDependencies = (
+			);
+			productName = DuibuTests;
+			productReference = 43A2634EF4FAA3B7B523A62F /* DuibuTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		3500882561B9DB088B61D2AD /* DuibuUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9DBBC10C4691D003BEEF145A /* Build configuration list for PBXNativeTarget "DuibuUITests" */;
+			buildPhases = (
+				5A93685B9500824A8BAD391F /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				300CFC67F3437CC56C370B34 /* PBXTargetDependency */,
+			);
+			name = DuibuUITests;
+			packageProductDependencies = (
+			);
+			productName = DuibuUITests;
+			productReference = D54B45D0D114B84B6F88EB0A /* DuibuUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		E212F9B86793542CF9AB010B /* Duibu */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 37A04891AC36155C3E44E0D1 /* Build configuration list for PBXNativeTarget "Duibu" */;
+			buildPhases = (
+				B41816DAD7F7E077B2594A38 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Duibu;
+			packageProductDependencies = (
+			);
+			productName = Duibu;
+			productReference = 90C4B83BA81B9168634E5339 /* Duibu.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		45E5D8BAAEFF0A37F6A8E595 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+					3500882561B9DB088B61D2AD = {
+						TestTargetID = E212F9B86793542CF9AB010B;
+					};
+					E212F9B86793542CF9AB010B = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = FC9024D809EC7882F39F6C72 /* Build configuration list for PBXProject "Duibu" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 0A8E488A4360A4955A5EA24F;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 176C5626B21FCD77A876916C /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E212F9B86793542CF9AB010B /* Duibu */,
+				2475442BD29FA284900E58BB /* DuibuTests */,
+				3500882561B9DB088B61D2AD /* DuibuUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		5A93685B9500824A8BAD391F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				00B551FBF6C2756FFE96AFFA /* ColorSmokeUITests.swift in Sources */,
+				2D34075C0E9E9AD91254D85B /* PatchProgressUITests.swift in Sources */,
+				0DC43A15833A3023C5DD0665 /* ScreenshotFlowUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B41816DAD7F7E077B2594A38 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A1E96EDB1D194991C90AAD97 /* AIBreakdownService.swift in Sources */,
+				8DA7B2EF2D04DE0278667476 /* APIClient.swift in Sources */,
+				6A46F9AE207895BF58F08EC9 /* APIConfig.swift in Sources */,
+				8F957BAF9A36ED41A108D78A /* CreateTaskView.swift in Sources */,
+				041AFE25657AA54FD44D38FF /* DomainModels.swift in Sources */,
+				D427CD14FD98D35A99A31A88 /* DuibuApp.swift in Sources */,
+				07E67B47537BC2B4484D9E6B /* EditStagesView.swift in Sources */,
+				0F91C1719033392FA80A2062 /* EditTaskMetaView.swift in Sources */,
+				726147726BA0B2D221F9823F /* FriendsView.swift in Sources */,
+				F5C71C3CF383BC49B1EBFD67 /* LocalStore.swift in Sources */,
+				DD6F834F5B522B976DA5CAB8 /* MeView.swift in Sources */,
+				5B2B495009244B47DBA3401A /* MedicalDisclaimerView.swift in Sources */,
+				8FE199294FC83CE4522932EB /* NoticesView.swift in Sources */,
+				4DFFCEB74F0F2469885C01CA /* ReminderService.swift in Sources */,
+				183121AB0C2C0DFE32C54FE1 /* ReportVerificationView.swift in Sources */,
+				BEDCD0C7919BC47FA30A029C /* RequestVerificationView.swift in Sources */,
+				7A54A7A7540F4B1147D95CA1 /* RewardEditorView.swift in Sources */,
+				23D9AEC6D63897D583804AD4 /* RootView.swift in Sources */,
+				F35168B294B83284A9450974 /* ScreenshotPrep.swift in Sources */,
+				BC97C412A210BFF68C3BA4AA /* TaskDetailView.swift in Sources */,
+				A3899BA1C26D199910639529 /* TaskListView.swift in Sources */,
+				116191E71BDF5C699A72D1EE /* TaskService.swift in Sources */,
+				59FE886D1329F2F4309146D7 /* TaskSyncModels.swift in Sources */,
+				994A4BF15B80D2D5CA203CDD /* Theme.swift in Sources */,
+				77C52FC4F7F583E65E2FC554 /* UploadConsentView.swift in Sources */,
+				44192C88A5889A28474C3839 /* VerificationHubView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B57492CA0C2ADE8E15AE09B2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1C71865BD638DFD76702F66A /* StageEditTests.swift in Sources */,
+				4073416C864D6D1435D341ED /* TaskProgressTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		300CFC67F3437CC56C370B34 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E212F9B86793542CF9AB010B /* Duibu */;
+			targetProxy = B5B52C7BBD3AEF03DA220150 /* PBXContainerItemProxy */;
+		};
+		84176FEC0FFDB777F9C5C324 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E212F9B86793542CF9AB010B /* Duibu */;
+			targetProxy = E29BF0C7680DD0F56C3549AF /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		10FDF4BF0247E03B2C5DF256 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Duibu/Duibu.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = StepBuddy;
+				INFOPLIST_KEY_NSAppTransportSecurity_NSAllowsLocalNetworking = YES;
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "StepBuddy needs photo access to attach a verification screenshot.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.stepbuddy.app;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		4FF59EA149483583356FCB8F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.stepbuddy.app.tests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Duibu.app/Duibu";
+			};
+			name = Debug;
+		};
+		6DAB253B9ACE6FA6AFE47F8C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		736A866226E6CAA14B0DB75D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.stepbuddy.app.tests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Duibu.app/Duibu";
+			};
+			name = Release;
+		};
+		817952EB3C23643AF28433D6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		8CE2C016F661335462F8C786 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Duibu/Duibu.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = StepBuddy;
+				INFOPLIST_KEY_NSAppTransportSecurity_NSAllowsLocalNetworking = YES;
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "StepBuddy needs photo access to attach a verification screenshot.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.stepbuddy.app;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		9221B3E25D3A67B9B1702487 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.stepbuddy.app.uitests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Duibu;
+			};
+			name = Debug;
+		};
+		E9FDB53AD2E387CF29554384 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.stepbuddy.app.uitests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Duibu;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		37A04891AC36155C3E44E0D1 /* Build configuration list for PBXNativeTarget "Duibu" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				10FDF4BF0247E03B2C5DF256 /* Debug */,
+				8CE2C016F661335462F8C786 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		9DBBC10C4691D003BEEF145A /* Build configuration list for PBXNativeTarget "DuibuUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9221B3E25D3A67B9B1702487 /* Debug */,
+				E9FDB53AD2E387CF29554384 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		EF16361CF516EEFCFEE3DEFC /* Build configuration list for PBXNativeTarget "DuibuTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4FF59EA149483583356FCB8F /* Debug */,
+				736A866226E6CAA14B0DB75D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		FC9024D809EC7882F39F6C72 /* Build configuration list for PBXProject "Duibu" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6DAB253B9ACE6FA6AFE47F8C /* Debug */,
+				817952EB3C23643AF28433D6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 45E5D8BAAEFF0A37F6A8E595 /* Project object */;
+}

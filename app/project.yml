@@ -1,0 +1,73 @@
+name: Duibu
+options:
+  bundleIdPrefix: com.stepbuddy
+  deploymentTarget:
+    iOS: "17.0"
+  xcodeVersion: "16.0"
+  createIntermediateGroups: true
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    TARGETED_DEVICE_FAMILY: "1"
+    IPHONEOS_DEPLOYMENT_TARGET: "17.0"
+targets:
+  Duibu:
+    type: application
+    platform: iOS
+    sources:
+      - path: Duibu
+    entitlements:
+      path: Duibu/Duibu.entitlements
+      properties:
+        com.apple.developer.applesignin: [Default]
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.stepbuddy.app
+        CODE_SIGN_ENTITLEMENTS: Duibu/Duibu.entitlements
+        INFOPLIST_KEY_CFBundleDisplayName: StepBuddy
+        INFOPLIST_KEY_UIApplicationSceneManifest_Generation: YES
+        INFOPLIST_KEY_UILaunchScreen_Generation: YES
+        INFOPLIST_KEY_UISupportedInterfaceOrientations: UIInterfaceOrientationPortrait
+        GENERATE_INFOPLIST_FILE: YES
+        INFOPLIST_KEY_NSAppTransportSecurity_NSAllowsLocalNetworking: YES
+        INFOPLIST_KEY_NSPhotoLibraryUsageDescription: "StepBuddy needs photo access to attach a verification screenshot."
+        CURRENT_PROJECT_VERSION: 1
+        MARKETING_VERSION: "0.1.0"
+        DEVELOPMENT_TEAM: ""
+        CODE_SIGN_STYLE: Automatic
+    dependencies: []
+  DuibuTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - path: DuibuTests
+    dependencies:
+      - target: Duibu
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+        PRODUCT_BUNDLE_IDENTIFIER: com.stepbuddy.app.tests
+  DuibuUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources:
+      - path: DuibuUITests
+    dependencies:
+      - target: Duibu
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+        PRODUCT_BUNDLE_IDENTIFIER: com.stepbuddy.app.uitests
+schemes:
+  Duibu:
+    build:
+      targets:
+        Duibu: all
+        DuibuTests: [test]
+        DuibuUITests: [test]
+    test:
+      targets:
+        - DuibuTests
+        - DuibuUITests
+    run:
+      config: Debug

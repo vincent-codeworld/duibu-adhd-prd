@@ -1,0 +1,66 @@
+# OS
+.DS_Store
+.AppleDouble
+.LSOverride
+Thumbs.db
+
+# Editors / IDE
+.idea/
+.vscode/
+*.swp
+*~
+
+# Secrets / env
+.env
+.env.*
+!.env.example
+*.pem
+*.p8
+*.p12
+GoogleService-Info.plist
+
+# —— App (Xcode / iOS) ——
+app/.derivedData/
+app/**/DerivedData/
+app/**/build/
+app/**/Build/
+app/**/Index.noindex/
+app/**/XCBuildData/
+app/**/*.xcuserstate
+app/**/xcuserdata/
+app/**/*.xcresult/
+app/.smoke/
+app/TestScreenshots/
+*.moved-aside
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# XcodeGen / SPM local
+app/.swiftpm/
+app/**/Packages/
+app/Carthage/Build/
+
+# —— Backend (Go) ——
+backend/bin/
+backend/dist/
+backend/tmp/
+backend/data/
+backend/*.exe
+backend/*.test
+backend/coverage.out
+backend/coverage.html
+__debug_bin*
+
+# Logs
+*.log
+npm-debug.log*
+# Extra Xcode / simulator noise (belt-and-suspenders)
+app/**/*.xcresult/
+app/**/*.xcuserdatad/
+app/**/timeline.xctimeline
+app/**/playground.xcworkspace
+*.mode1v3
+*.mode2v3
+*.perspectivev3
