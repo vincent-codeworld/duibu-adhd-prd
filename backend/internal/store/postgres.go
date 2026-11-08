@@ -4,6 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
+	"strings"
 	"time"
 
 	"github.com/vincent-codeworld/duibu-adhd/backend/internal/domain"
@@ -51,20 +52,23 @@ func scanAccount(row interface {
 	Scan(dest ...any) error
 }) (*domain.Account, error) {
 	var a domain.Account
-	if err := row.Scan(&a.ID, &a.Nickname, &a.AppleSubject, &a.InviteCode, &a.CreatedAt); err != nil {
+	var appleSub, googleSub sql.NullString
+	if err := row.Scan(&a.ID, &a.Nickname, &appleSub, &googleSub, &a.InviteCode, &a.CreatedAt); err != nil {
 		return nil, err
 	}
+	a.AppleSubject = appleSub.String
+	a.GoogleSubject = googleSub.String
 	a.CreatedAt = a.CreatedAt.UTC()
 	return &a, nil
 }
 
+const accountColumns = `id, nickname, apple_subject, google_subject, invite_code, created_at`
+
 func (p *Postgres) UpsertByAppleSubject(appleSubject, nickname string) (*domain.Account, bool, error) {
 	ctx := context.Background()
-	var existing domain.Account
-	err := p.db.QueryRowContext(ctx, `
-SELECT id, nickname, apple_subject, invite_code, created_at
-FROM accounts WHERE apple_subject=$1`, appleSubject).
-		Scan(&existing.ID, &existing.Nickname, &existing.AppleSubject, &existing.InviteCode, &existing.CreatedAt)
+	existing, err := scanAccount(p.db.QueryRowContext(ctx, `
+SELECT `+accountColumns+`
+FROM accounts WHERE apple_subject=$1`, appleSubject))
 	if err == nil {
 		if nickname != "" && existing.Nickname != nickname {
 			if len([]rune(nickname)) > 20 {
@@ -75,8 +79,7 @@ FROM accounts WHERE apple_subject=$1`, appleSubject).
 			}
 			existing.Nickname = nickname
 		}
-		existing.CreatedAt = existing.CreatedAt.UTC()
-		return &existing, false, nil
+		return existing, false, nil
 	}
 	if err != sql.ErrNoRows {
 		return nil, false, err
@@ -91,22 +94,63 @@ FROM accounts WHERE apple_subject=$1`, appleSubject).
 	if err != nil {
 		return nil, false, err
 	}
-	var a domain.Account
-	err = p.db.QueryRowContext(ctx, `
+	a, err := scanAccount(p.db.QueryRowContext(ctx, `
 INSERT INTO accounts (nickname, apple_subject, invite_code)
 VALUES ($1,$2,$3)
-RETURNING id, nickname, apple_subject, invite_code, created_at`, nickname, appleSubject, code).
-		Scan(&a.ID, &a.Nickname, &a.AppleSubject, &a.InviteCode, &a.CreatedAt)
+RETURNING `+accountColumns, nickname, appleSubject, code))
 	if err != nil {
 		return nil, false, err
 	}
-	a.CreatedAt = a.CreatedAt.UTC()
-	return &a, true, nil
+	return a, true, nil
+}
+
+func (p *Postgres) UpsertByGoogleSubject(googleSubject, nickname string) (*domain.Account, bool, error) {
+	googleSubject = strings.TrimSpace(googleSubject)
+	if googleSubject == "" {
+		return nil, false, fmt.Errorf("google subject required")
+	}
+	ctx := context.Background()
+	existing, err := scanAccount(p.db.QueryRowContext(ctx, `
+SELECT `+accountColumns+`
+FROM accounts WHERE google_subject=$1`, googleSubject))
+	if err == nil {
+		if nickname != "" && existing.Nickname != nickname {
+			if len([]rune(nickname)) > 20 {
+				return nil, false, fmt.Errorf("nickname too long")
+			}
+			if _, err := p.db.ExecContext(ctx, `UPDATE accounts SET nickname=$2 WHERE id=$1`, existing.ID, nickname); err != nil {
+				return nil, false, err
+			}
+			existing.Nickname = nickname
+		}
+		return existing, false, nil
+	}
+	if err != sql.ErrNoRows {
+		return nil, false, err
+	}
+	if nickname == "" {
+		nickname = "用户"
+	}
+	if len([]rune(nickname)) > 20 {
+		return nil, false, fmt.Errorf("nickname too long")
+	}
+	code, err := randomInviteCode()
+	if err != nil {
+		return nil, false, err
+	}
+	a, err := scanAccount(p.db.QueryRowContext(ctx, `
+INSERT INTO accounts (nickname, google_subject, invite_code)
+VALUES ($1,$2,$3)
+RETURNING `+accountColumns, nickname, googleSubject, code))
+	if err != nil {
+		return nil, false, err
+	}
+	return a, true, nil
 }
 
 func (p *Postgres) GetByID(id string) (*domain.Account, error) {
 	a, err := scanAccount(p.db.QueryRow(`
-SELECT id, nickname, apple_subject, invite_code, created_at FROM accounts WHERE id=$1`, id))
+SELECT `+accountColumns+` FROM accounts WHERE id=$1`, id))
 	if err == sql.ErrNoRows {
 		return nil, fmt.Errorf("not found")
 	}
@@ -115,7 +159,7 @@ SELECT id, nickname, apple_subject, invite_code, created_at FROM accounts WHERE 
 
 func (p *Postgres) GetByInviteCode(code string) (*domain.Account, error) {
 	a, err := scanAccount(p.db.QueryRow(`
-SELECT id, nickname, apple_subject, invite_code, created_at FROM accounts WHERE invite_code=$1`, code))
+SELECT `+accountColumns+` FROM accounts WHERE invite_code=$1`, code))
 	if err == sql.ErrNoRows {
 		return nil, fmt.Errorf("invalid invite code")
 	}

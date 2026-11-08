@@ -10,9 +10,11 @@ type Config struct {
 	HTTPAddr                  string
 	DatabaseURL               string
 	JWTSecret                 string
-	AuthMode                  string // stub | apple
+	AuthMode                  string // stub | apple (apple = verify Apple and Google ID tokens)
 	AppleClientID             string // primary audience (usually iOS Bundle ID)
 	AppleClientIDs            string // optional comma-separated extra audiences (e.g. Services ID)
+	GoogleClientID            string // primary Google OAuth client ID (iOS). Audience of the ID token.
+	GoogleClientIDs           string // optional comma-separated extra Google audiences (e.g. server client ID)
 	AppleTeamID               string // for client_secret / future token exchange; not required to verify identityToken
 	AppleKeyID                string
 	ApplePrivateKeyPEM        string // inline .p8 PEM (optional)
@@ -41,6 +43,8 @@ func Load() Config {
 		AuthMode:                  mode,
 		AppleClientID:             os.Getenv("APPLE_CLIENT_ID"),
 		AppleClientIDs:            os.Getenv("APPLE_CLIENT_IDS"),
+		GoogleClientID:            os.Getenv("GOOGLE_CLIENT_ID"),
+		GoogleClientIDs:           os.Getenv("GOOGLE_CLIENT_IDS"),
 		AppleTeamID:               os.Getenv("APPLE_TEAM_ID"),
 		AppleKeyID:                os.Getenv("APPLE_KEY_ID"),
 		ApplePrivateKeyPEM:        os.Getenv("APPLE_PRIVATE_KEY_PEM"),
@@ -71,6 +75,28 @@ func (c Config) AppleAudiences() []string {
 	}
 	add(c.AppleClientID)
 	for _, part := range strings.Split(c.AppleClientIDs, ",") {
+		add(part)
+	}
+	return out
+}
+
+// GoogleAudiences returns OAuth client IDs used as Google ID token aud (and azp, when present).
+func (c Config) GoogleAudiences() []string {
+	seen := map[string]struct{}{}
+	var out []string
+	add := func(s string) {
+		s = strings.TrimSpace(s)
+		if s == "" {
+			return
+		}
+		if _, ok := seen[s]; ok {
+			return
+		}
+		seen[s] = struct{}{}
+		out = append(out, s)
+	}
+	add(c.GoogleClientID)
+	for _, part := range strings.Split(c.GoogleClientIDs, ",") {
 		add(part)
 	}
 	return out

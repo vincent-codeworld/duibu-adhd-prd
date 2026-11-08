@@ -10,6 +10,8 @@ import (
 // Memory is for unit tests / STORE_DRIVER=memory; Postgres is the default runtime path.
 type Store interface {
 	UpsertByAppleSubject(appleSubject, nickname string) (*domain.Account, bool, error)
+	// UpsertByGoogleSubject keys only on the Google sub. It must not match Apple subjects or email.
+	UpsertByGoogleSubject(googleSubject, nickname string) (*domain.Account, bool, error)
 	GetByID(id string) (*domain.Account, error)
 	GetByInviteCode(code string) (*domain.Account, error)
 	UpdateNickname(id, nickname string) (*domain.Account, error)

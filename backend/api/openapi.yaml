@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: 兑步 API
-  version: 0.8.1
+  version: 0.9.0
   description: |
     Persistence: default STORE_DRIVER=postgres (DATABASE_URL); STORE_DRIVER=memory for ephemeral local/tests.
     Invite-code failure rate limit (INVITE_CODE_MAX_FAILS_PER_HOUR, default 10): postgres persists invite_code_failures across API restarts; memory is process-local. Client errors unchanged (404 invalid_invite_code, 429 too_many_failed_invite_attempts).
@@ -10,8 +10,10 @@ info:
     任务必填 dueAt；阶段可选 remindAt（宜 ≤ dueAt，超出 400）。
     有验收人时 POST /tasks/{id}/complete → 403 verification required；任务 completed 仅当 task_completion 验收通过。
     验收人接口不得返回任务备注。仅设备任务不出网。AI 只接收 title/notes。
-    AUTH_MODE=stub 时可用 /v1/auth/dev，且 /v1/auth/apple 把 identityToken 当 subject。
-    AUTH_MODE=apple 时校验 Apple identityToken（JWKS），需配置 APPLE_CLIENT_ID（MVP Bundle：`com.stepbuddy.app`）。
+    AUTH_MODE=stub 时可用 /v1/auth/dev，且 /v1/auth/apple 与 /v1/auth/google 把 identityToken 当各自 provider 的 subject（互不合并）。
+    AUTH_MODE=apple 时校验 Apple identityToken（JWKS），需配置 APPLE_CLIENT_ID（MVP Bundle：`com.stepbuddy.app`）；
+    同时校验 Google ID token，需配置 GOOGLE_CLIENT_ID（iOS OAuth client ID）。未配置对应 client ID 时该登录接口 503，不放行未校验 token。
+    Apple 与 Google 按各自 sub 分账号，不会按 email 静默绑定。
 servers:
   - url: http://localhost:8080
 paths:
@@ -27,7 +29,10 @@ paths:
                 type: object
                 properties:
                   status: { type: string, example: ok }
-                  authMode: { type: string, enum: [stub, apple] }
+                  authMode:
+                    type: string
+                    enum: [stub, apple]
+                    description: apple 表示校验 Apple 与 Google ID token；stub 表示联调明文 subject。
 
   /v1/auth/dev:
     post:
@@ -83,6 +88,42 @@ paths:
           description: invalid Apple identityToken
         "503":
           description: AUTH_MODE=apple but APPLE_CLIENT_ID not configured
+
+  /v1/auth/google:
+    post:
+      summary: Sign in with Google
+      description: |
+        请求体与 Apple 相同：`identityToken` + 可选 `nickname`。响应与 Apple/stub 相同（AuthResponse）。
+        AUTH_MODE=stub：identityToken 当作稳定 Google subject 字符串，签发应用 JWT（联调用，不需要真实 Google token 或 GOOGLE_CLIENT_ID）。
+        该 subject 只写入 google_subject，不会按邮箱、或与 Apple 相同的字符串，绑定已有 Apple 账号。
+        AUTH_MODE=apple：校验 Google ID token（RS256，JWKS `https://www.googleapis.com/oauth2/v3/certs`，
+        iss 为 `https://accounts.google.com` 或 `accounts.google.com`，aud ∈ GOOGLE_CLIENT_ID[/S]，
+        若 token 含 azp 则 azp 也必须 ∈ 这些 client ID，exp 必填，允许 30s 时钟偏差）。
+        通过后只按 Google `sub` 创建或返回账号。未配置 GOOGLE_CLIENT_ID 时 503，不会把未校验字符串当成 subject。
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [identityToken]
+              properties:
+                identityToken:
+                  type: string
+                  description: Google ID token JWT。stub 模式下为任意稳定 subject 字符串。
+                nickname: { type: string, maxLength: 20 }
+      responses:
+        "200":
+          description: Session issued
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/AuthResponse" }
+        "400":
+          description: identityToken required / bad nickname
+        "401":
+          description: invalid Google ID token
+        "503":
+          description: AUTH_MODE=apple but GOOGLE_CLIENT_ID not configured
 
   /v1/me:
     get:

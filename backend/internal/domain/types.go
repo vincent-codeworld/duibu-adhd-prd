@@ -51,11 +51,15 @@ const (
 )
 
 type Account struct {
-	ID           string
-	Nickname     string
-	AppleSubject string
-	InviteCode   string
-	CreatedAt    time.Time
+	ID       string
+	Nickname string
+	// AppleSubject and GoogleSubject are independent provider keys.
+	// An empty value means that provider is not attached. Email is not an identity key
+	// and must not merge these accounts.
+	AppleSubject  string
+	GoogleSubject string
+	InviteCode    string
+	CreatedAt     time.Time
 }
 
 type Task struct {

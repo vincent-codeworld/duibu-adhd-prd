@@ -36,6 +36,7 @@ func NewRouter(cfg config.Config) http.Handler {
 
 	r.Route("/v1", func(r chi.Router) {
 		r.Post("/auth/apple", h.AuthApple)
+		r.Post("/auth/google", h.AuthGoogle)
 		if cfg.AuthMode == "stub" {
 			r.Post("/auth/dev", h.AuthDev)
 		}
