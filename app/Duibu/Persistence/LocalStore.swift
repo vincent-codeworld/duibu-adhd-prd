@@ -66,7 +66,7 @@ final class LocalStore: ObservableObject {
     }
 
     func setLoggedIn(_ loggedIn: Bool, nickname: String?) {
-        // PRD: login must not upload or clear device-only tasks.
+        // Session flag only. Does not upload or delete device-only tasks.
         isLoggedIn = loggedIn
         accountNickname = nickname
         if !loggedIn {
@@ -78,7 +78,8 @@ final class LocalStore: ObservableObject {
         persist()
     }
 
-    /// Apply remote session. Never uploads device-only tasks.
+    /// Store the app session restored on the next launch. Does not upload tasks.
+    /// Callers that just signed in run best-effort auto-upload separately.
     func applySession(accountId: String, nickname: String, inviteCode: String, accessToken: String, expiresAt: Date) {
         self.isLoggedIn = true
         self.accountId = accountId

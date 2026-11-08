@@ -1,0 +1,12 @@
+// Copy this file to GoogleSignIn.local.xcconfig in the same directory.
+// Do not commit GoogleSignIn.local.xcconfig. It is gitignored because it holds the OAuth client ID.
+//
+// Google Cloud Console → APIs & Services → Credentials → Create credentials → OAuth client ID → iOS.
+// Bundle ID: com.stepbuddy.app
+//
+// GOOGLE_IOS_CLIENT_ID=<iOS client id ending in .apps.googleusercontent.com>
+// GOOGLE_IOS_URL_SCHEME=<reversed iOS client id: com.googleusercontent.apps.<prefix>>
+//
+// Leave the server client unset unless the API verifies a Web client ID as the ID token audience.
+// When it is unset, the identity token audience is the iOS client ID.
+// GOOGLE_IOS_SERVER_CLIENT_ID=
