@@ -93,7 +93,7 @@ actor APIClient {
             let nickname: String?
         }
         let response: AuthSessionResponse = try await post(
-            path: "/v1/auth/dev",
+            path: AuthExchangePath.dev,
             body: Body(subject: subject, nickname: nickname),
             authorized: false
         )
@@ -102,13 +102,35 @@ actor APIClient {
     }
 
     func loginApple(identityToken: String, nickname: String?) async throws -> AuthSessionResponse {
-        struct Body: Encodable {
-            let identityToken: String
-            let nickname: String?
-        }
+        try await loginWithIdentityToken(
+            path: AuthExchangePath.apple,
+            identityToken: identityToken,
+            nickname: nickname
+        )
+    }
+
+    /// `POST /v1/auth/google`. Same `AuthResponse` as Apple.
+    /// Sends `identityToken` and optional `nickname` only. Does not send email.
+    ///
+    /// Assumption until the backend route is merged: the server keys the account by the Google `sub`
+    /// inside the identity token. With no `GIDServerClientID`, the token `aud` is the iOS client ID.
+    /// When `GIDServerClientID` is set, Google sets `aud` to that server client ID.
+    func loginGoogle(identityToken: String, nickname: String?) async throws -> AuthSessionResponse {
+        try await loginWithIdentityToken(
+            path: AuthExchangePath.google,
+            identityToken: identityToken,
+            nickname: nickname
+        )
+    }
+
+    private func loginWithIdentityToken(
+        path: String,
+        identityToken: String,
+        nickname: String?
+    ) async throws -> AuthSessionResponse {
         let response: AuthSessionResponse = try await post(
-            path: "/v1/auth/apple",
-            body: Body(identityToken: identityToken, nickname: nickname),
+            path: path,
+            body: IdentityTokenLoginBody(identityToken: identityToken, nickname: nickname),
             authorized: false
         )
         accessToken = response.accessToken

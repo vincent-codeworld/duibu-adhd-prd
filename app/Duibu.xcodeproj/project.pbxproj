@@ -30,6 +30,11 @@
 		8F957BAF9A36ED41A108D78A /* CreateTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3635139F23DD06DDA601C9E /* CreateTaskView.swift */; };
 		8FE199294FC83CE4522932EB /* NoticesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6037AB8D0564A51A7A78ABA7 /* NoticesView.swift */; };
 		994A4BF15B80D2D5CA203CDD /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51FF376B9D8E92DD4917AE14 /* Theme.swift */; };
+		A11CE0010000000000000002 /* IdentityLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11CE0010000000000000001 /* IdentityLogin.swift */; };
+		A11CE0010000000000000004 /* GoogleNativeSignIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11CE0010000000000000003 /* GoogleNativeSignIn.swift */; };
+		A11CE0010000000000000006 /* GoogleSignInContractTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11CE0010000000000000005 /* GoogleSignInContractTests.swift */; };
+		A11CE0010000000000000010 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE001000000000000000E /* GoogleSignIn */; };
+		A11CE0010000000000000011 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = A11CE001000000000000000F /* GoogleSignInSwift */; };
 		A1E96EDB1D194991C90AAD97 /* AIBreakdownService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56A648B4D1955063854BAFFF /* AIBreakdownService.swift */; };
 		A3899BA1C26D199910639529 /* TaskListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD68760EE34B836A5454C10D /* TaskListView.swift */; };
 		BC97C412A210BFF68C3BA4AA /* TaskDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 137A3CF77CD51037F04B46F3 /* TaskDetailView.swift */; };
@@ -84,6 +89,12 @@
 		916ED4ED9614249E1CA4F3D5 /* ReportVerificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportVerificationView.swift; sourceTree = "<group>"; };
 		99BE7F6540773CC8C9D62534 /* MeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeView.swift; sourceTree = "<group>"; };
 		9EE69B42274E50CAF146DA73 /* DomainModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainModels.swift; sourceTree = "<group>"; };
+		A11CE0010000000000000001 /* IdentityLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentityLogin.swift; sourceTree = "<group>"; };
+		A11CE0010000000000000003 /* GoogleNativeSignIn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleNativeSignIn.swift; sourceTree = "<group>"; };
+		A11CE0010000000000000005 /* GoogleSignInContractTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleSignInContractTests.swift; sourceTree = "<group>"; };
+		A11CE0010000000000000009 /* GoogleSignIn.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = GoogleSignIn.xcconfig; sourceTree = "<group>"; };
+		A11CE001000000000000000A /* GoogleSignIn.local.xcconfig.example */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = GoogleSignIn.local.xcconfig.example; sourceTree = "<group>"; };
+		A11CE001000000000000000B /* GoogleSignIn-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = GoogleSignIn-Info.plist; sourceTree = "<group>"; };
 		A82BD361389F92967342776F /* MedicalDisclaimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicalDisclaimerView.swift; sourceTree = "<group>"; };
 		AD68760EE34B836A5454C10D /* TaskListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListView.swift; sourceTree = "<group>"; };
 		B3635139F23DD06DDA601C9E /* CreateTaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTaskView.swift; sourceTree = "<group>"; };
@@ -99,11 +110,22 @@
 		0A8E488A4360A4955A5EA24F = {
 			isa = PBXGroup;
 			children = (
+				A11CE001000000000000000C /* Config */,
 				45378D6C2485C090363F5D14 /* Duibu */,
 				7A2E401C0F509EBA0A74AA3F /* DuibuTests */,
 				7673426582D0E0D84409B220 /* DuibuUITests */,
 				176C5626B21FCD77A876916C /* Products */,
 			);
+			sourceTree = "<group>";
+		};
+		A11CE001000000000000000C /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				A11CE001000000000000000B /* GoogleSignIn-Info.plist */,
+				A11CE0010000000000000009 /* GoogleSignIn.xcconfig */,
+				A11CE001000000000000000A /* GoogleSignIn.local.xcconfig.example */,
+			);
+			path = Config;
 			sourceTree = "<group>";
 		};
 		10899DB7425CB0FACFC4D3AC /* Me */ = {
@@ -130,6 +152,7 @@
 			isa = PBXGroup;
 			children = (
 				56A648B4D1955063854BAFFF /* AIBreakdownService.swift */,
+				A11CE0010000000000000003 /* GoogleNativeSignIn.swift */,
 				D7ED6EB90B90C16B0728C4B5 /* ReminderService.swift */,
 				BCC135673DCD3A67C44463B3 /* ScreenshotPrep.swift */,
 				728DBFBF731C742B1E5513AA /* TaskService.swift */,
@@ -142,6 +165,7 @@
 			children = (
 				53411AEF6678E29A02C944FA /* APIClient.swift */,
 				84262ED49CD98C726D26FC2B /* APIConfig.swift */,
+				A11CE0010000000000000001 /* IdentityLogin.swift */,
 				84FB15C70D120D8F86107840 /* TaskSyncModels.swift */,
 			);
 			path = Networking;
@@ -176,6 +200,7 @@
 		7A2E401C0F509EBA0A74AA3F /* DuibuTests */ = {
 			isa = PBXGroup;
 			children = (
+				A11CE0010000000000000005 /* GoogleSignInContractTests.swift */,
 				184003BE6F59E91706C7A083 /* StageEditTests.swift */,
 				FB84B4B9DAB84B52E3B3CAAD /* TaskProgressTests.swift */,
 			);
@@ -243,6 +268,18 @@
 		};
 /* End PBXGroup section */
 
+/* Begin PBXFrameworksBuildPhase section */
+		A11CE0010000000000000012 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A11CE0010000000000000010 /* GoogleSignIn in Frameworks */,
+				A11CE0010000000000000011 /* GoogleSignInSwift in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
 /* Begin PBXNativeTarget section */
 		2475442BD29FA284900E58BB /* DuibuTests */ = {
 			isa = PBXNativeTarget;
@@ -284,6 +321,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 37A04891AC36155C3E44E0D1 /* Build configuration list for PBXNativeTarget "Duibu" */;
 			buildPhases = (
+				A11CE0010000000000000012 /* Frameworks */,
 				B41816DAD7F7E077B2594A38 /* Sources */,
 			);
 			buildRules = (
@@ -292,6 +330,8 @@
 			);
 			name = Duibu;
 			packageProductDependencies = (
+				A11CE001000000000000000E /* GoogleSignIn */,
+				A11CE001000000000000000F /* GoogleSignInSwift */,
 			);
 			productName = Duibu;
 			productReference = 90C4B83BA81B9168634E5339 /* Duibu.app */;
@@ -324,6 +364,9 @@
 			);
 			mainGroup = 0A8E488A4360A4955A5EA24F;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				A11CE001000000000000000D /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 176C5626B21FCD77A876916C /* Products */;
 			projectDirPath = "";
@@ -360,6 +403,8 @@
 				07E67B47537BC2B4484D9E6B /* EditStagesView.swift in Sources */,
 				0F91C1719033392FA80A2062 /* EditTaskMetaView.swift in Sources */,
 				726147726BA0B2D221F9823F /* FriendsView.swift in Sources */,
+				A11CE0010000000000000004 /* GoogleNativeSignIn.swift in Sources */,
+				A11CE0010000000000000002 /* IdentityLogin.swift in Sources */,
 				F5C71C3CF383BC49B1EBFD67 /* LocalStore.swift in Sources */,
 				DD6F834F5B522B976DA5CAB8 /* MeView.swift in Sources */,
 				5B2B495009244B47DBA3401A /* MedicalDisclaimerView.swift in Sources */,
@@ -384,6 +429,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A11CE0010000000000000006 /* GoogleSignInContractTests.swift in Sources */,
 				1C71865BD638DFD76702F66A /* StageEditTests.swift in Sources */,
 				4073416C864D6D1435D341ED /* TaskProgressTests.swift in Sources */,
 			);
@@ -407,6 +453,7 @@
 /* Begin XCBuildConfiguration section */
 		10FDF4BF0247E03B2C5DF256 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A11CE0010000000000000009 /* GoogleSignIn.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Duibu/Duibu.entitlements;
@@ -415,6 +462,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Config/GoogleSignIn-Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = StepBuddy;
 				INFOPLIST_KEY_NSAppTransportSecurity_NSAllowsLocalNetworking = YES;
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "StepBuddy needs photo access to attach a verification screenshot.";
@@ -589,6 +637,7 @@
 		};
 		8CE2C016F661335462F8C786 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A11CE0010000000000000009 /* GoogleSignIn.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Duibu/Duibu.entitlements;
@@ -597,6 +646,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Config/GoogleSignIn-Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = StepBuddy;
 				INFOPLIST_KEY_NSAppTransportSecurity_NSAllowsLocalNetworking = YES;
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "StepBuddy needs photo access to attach a verification screenshot.";
@@ -688,6 +738,30 @@
 			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		A11CE001000000000000000D /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
+			requirement = {
+				kind = exactVersion;
+				version = 10.1.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A11CE001000000000000000E /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A11CE001000000000000000D /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
+		};
+		A11CE001000000000000000F /* GoogleSignInSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A11CE001000000000000000D /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignInSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 45E5D8BAAEFF0A37F6A8E595 /* Project object */;
 }

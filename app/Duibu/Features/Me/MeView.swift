@@ -1,5 +1,6 @@
 import SwiftUI
 import AuthenticationServices
+import GoogleSignInSwift
 
 struct MeView: View {
     @EnvironmentObject private var store: LocalStore
@@ -32,11 +33,11 @@ struct MeView: View {
                             .font(.caption)
                             .foregroundStyle(.secondary)
                     } else {
-                        NavigationLink("Sign in with Apple") {
+                        NavigationLink("Sign in") {
                             LoginPlaceholderView()
                         }
                         .accessibilityIdentifier("me.login")
-                        Text("You can use local rewards without signing in. For API smoke tests, use stub login.")
+                        Text("You can use local rewards without signing in. Sign in with Apple or Google to sync. For API smoke tests, use stub login.")
                             .font(.caption)
                             .foregroundStyle(.secondary)
                     }
@@ -86,7 +87,10 @@ struct MeView: View {
 
                 Section {
                     Text("StepBuddy is a planning and agreement notebook — not medical advice or treatment.")
-                    Text("Signing in uploads device-only tasks to your account. Until then, uninstalling or losing this phone deletes them.")
+                    Text(GoogleSignInCopy.loginUploadExplanation)
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                    Text("Until a task uploads, uninstalling or losing this phone deletes it.")
                         .font(.caption)
                         .foregroundStyle(.secondary)
                     Text("Tasks on this device: \(store.tasks.count)")
@@ -149,7 +153,6 @@ struct MeView: View {
 }
 
 struct LoginPlaceholderView: View {
-    @EnvironmentObject private var store: LocalStore
     @EnvironmentObject private var appModel: AppModel
     @Environment(\.dismiss) private var dismiss
 
@@ -158,16 +161,31 @@ struct LoginPlaceholderView: View {
     @State private var errorMessage: String?
     @State private var isBusy = false
 
+    private var googleConfiguration: GoogleSignInConfiguration {
+        GoogleSignInConfiguration.load()
+    }
+
     var body: some View {
         Form {
-            Section("Sign in with Apple") {
-                Text("On device use `AUTH_MODE=apple` + `APPLE_CLIENT_ID=com.stepbuddy.app`. Sign-in never uploads device-only tasks.")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
+            Section {
                 TextField("Nickname (optional, max 20)", text: $nickname)
                     .onChange(of: nickname) { _, value in
                         if value.count > 20 { nickname = String(value.prefix(20)) }
                     }
+                Text("Optional name for a new account. It is not used to link Apple and Google accounts.")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                Text(GoogleSignInCopy.loginUploadExplanation)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            } header: {
+                Text("Display name")
+            }
+
+            Section("Sign in with Apple") {
+                Text(GoogleSignInCopy.appleDeviceHint)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
                 SignInWithAppleButton(.signIn) { request in
                     request.requestedScopes = [.fullName]
                 } onCompletion: { result in
@@ -177,6 +195,38 @@ struct LoginPlaceholderView: View {
                 .frame(height: 44)
                 .accessibilityIdentifier("login.apple")
                 .disabled(isBusy)
+            }
+
+            Section("Sign in with Google") {
+                Text(GoogleSignInCopy.googleExchangeHint)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                switch googleConfiguration.availability {
+                case .unavailable(let message):
+                    Text(message)
+                        .font(.caption)
+                        .foregroundStyle(.red)
+                        .accessibilityIdentifier("login.google.unavailable")
+                    Button("Google sign-in unavailable") {
+                        errorMessage = message
+                    }
+                    .accessibilityIdentifier("login.google")
+                    .disabled(isBusy)
+                case .ready:
+                    HStack {
+                        Spacer(minLength: 0)
+                        GoogleSignInButton(
+                            scheme: .light,
+                            style: .standard,
+                            state: isBusy ? .disabled : .normal
+                        ) {
+                            Task { await startGoogle() }
+                        }
+                        .frame(minHeight: 44)
+                        .accessibilityIdentifier("login.google")
+                        Spacer(minLength: 0)
+                    }
+                }
             }
 
             Section("Dev / stub") {
@@ -198,11 +248,25 @@ struct LoginPlaceholderView: View {
                 .disabled(isBusy || subject.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
             }
 
+            #if DEBUG
+            Section("Debug stub (not Google sign-in)") {
+                Text(GoogleSignInCopy.debugStubExplanation)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                Button(isBusy ? "Signing in…" : GoogleSignInCopy.debugStubButton) {
+                    Task { await loginGoogleStub() }
+                }
+                .accessibilityIdentifier("login.google.stub")
+                .disabled(isBusy || subject.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+            }
+            #endif
+
             if let errorMessage {
                 Section { Text(errorMessage).foregroundStyle(.red) }
             }
         }
         .navigationTitle("Sign in")
+        .stepBuddyFormChrome()
         .disabled(isBusy)
     }
 
@@ -234,10 +298,59 @@ struct LoginPlaceholderView: View {
             try await appModel.loginWithApple(identityToken: identityToken, nickname: nick)
             errorMessage = nil
             dismiss()
+        } catch let error as ASAuthorizationError where error.code == .canceled {
+            errorMessage = GoogleSignInCopy.appleCancelled
         } catch {
             errorMessage = error.localizedDescription
         }
     }
+
+    private func startGoogle() async {
+        let configuration = googleConfiguration
+        if case .unavailable(let message) = configuration.availability {
+            errorMessage = message
+            return
+        }
+        isBusy = true
+        defer { isBusy = false }
+        let attempt = await GoogleNativeSignIn.signIn(configuration: configuration)
+        guard let request = attempt.exchangeRequest(typedNickname: nickname), request.isRealGoogleSignIn else {
+            switch attempt {
+            case .cancelled:
+                errorMessage = GoogleSignInCopy.cancelled
+            case .unavailable(let message), .failed(let message):
+                errorMessage = message
+            case .identity:
+                errorMessage = GoogleSignInCopy.noIdentityToken
+            }
+            return
+        }
+        do {
+            try await appModel.loginWithGoogle(identityToken: request.identityToken, nickname: request.nickname)
+            errorMessage = nil
+            dismiss()
+        } catch {
+            errorMessage = error.localizedDescription
+        }
+    }
+
+    #if DEBUG
+    private func loginGoogleStub() async {
+        let sub = subject.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard let request = GoogleExchangeRequest.debugStub(subject: sub, typedNickname: nickname),
+              !request.isRealGoogleSignIn
+        else { return }
+        isBusy = true
+        defer { isBusy = false }
+        do {
+            try await appModel.loginWithGoogleDebugStub(subject: request.identityToken, nickname: request.nickname)
+            errorMessage = nil
+            dismiss()
+        } catch {
+            errorMessage = error.localizedDescription
+        }
+    }
+    #endif
 
     private func loginStub() async {
         let name = nickname.trimmingCharacters(in: .whitespacesAndNewlines)

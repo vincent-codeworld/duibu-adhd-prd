@@ -1,0 +1,11 @@
+// StepBuddy Google Sign-In settings.
+// No OAuth client ID is shipped in this repo.
+// Copy GoogleSignIn.local.xcconfig.example to GoogleSignIn.local.xcconfig
+// (gitignored) and set the real iOS client values there.
+// The optional include overrides the defaults below when that file exists.
+
+GOOGLE_IOS_CLIENT_ID=
+GOOGLE_IOS_SERVER_CLIENT_ID=
+GOOGLE_IOS_URL_SCHEME=com.stepbuddy.app.google-signin-unconfigured
+
+#include? "GoogleSignIn.local.xcconfig"

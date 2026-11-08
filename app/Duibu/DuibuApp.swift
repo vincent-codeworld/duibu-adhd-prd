@@ -26,6 +26,12 @@ struct DuibuApp: App {
             RootView()
                 .environmentObject(appModel.store)
                 .environmentObject(appModel)
+                .onOpenURL { url in
+                    // Finishes the Google OAuth redirect. Does not replace the stored app session.
+                    Task { @MainActor in
+                        _ = GoogleNativeSignIn.handle(url)
+                    }
+                }
         }
     }
 }
@@ -54,18 +60,32 @@ final class AppModel: ObservableObject {
 
     func loginWithDevStub(subject: String, nickname: String) async throws {
         let session = try await api.loginDev(subject: subject, nickname: nickname)
-        store.applySession(
-            accountId: session.account.id,
-            nickname: session.account.nickname,
-            inviteCode: session.account.inviteCode,
-            accessToken: session.accessToken,
-            expiresAt: session.expiresAt
-        )
-        await uploadDeviceOnlyTasksAfterLogin()
+        await adopt(session)
     }
 
     func loginWithApple(identityToken: String, nickname: String?) async throws {
         let session = try await api.loginApple(identityToken: identityToken, nickname: nickname)
+        await adopt(session)
+    }
+
+    func loginWithGoogle(identityToken: String, nickname: String?) async throws {
+        let session = try await api.loginGoogle(identityToken: identityToken, nickname: nickname)
+        await adopt(session)
+    }
+
+    #if DEBUG
+    /// Posts the dev subject to `/v1/auth/google`. This is not Google sign-in.
+    func loginWithGoogleDebugStub(subject: String, nickname: String?) async throws {
+        guard let request = GoogleExchangeRequest.debugStub(subject: subject, typedNickname: nickname),
+              !request.isRealGoogleSignIn
+        else {
+            throw APIError.notImplemented("Debug Google stub needs a dev subject and is not Google sign-in.")
+        }
+        try await loginWithGoogle(identityToken: request.identityToken, nickname: request.nickname)
+    }
+    #endif
+
+    private func adopt(_ session: AuthSessionResponse) async {
         store.applySession(
             accountId: session.account.id,
             nickname: session.account.nickname,
@@ -181,6 +201,7 @@ final class AppModel: ObservableObject {
     }
 
     func logout() async {
+        GoogleNativeSignIn.signOut()
         await api.setToken(nil)
         store.clearSession()
     }
