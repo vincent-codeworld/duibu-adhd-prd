@@ -4,6 +4,7 @@ import (
 	"crypto/rand"
 	"encoding/hex"
 	"fmt"
+	"strings"
 	"sync"
 	"time"
 
@@ -31,6 +32,7 @@ type Memory struct {
 	mu                sync.RWMutex
 	byID              map[string]*domain.Account
 	byApple           map[string]*domain.Account
+	byGoogle          map[string]*domain.Account
 	byInvite          map[string]*domain.Account
 	friendships       map[string]*Friendship          // id -> friendship
 	blocks            map[string]map[string]time.Time // blocker -> blocked -> at
@@ -47,6 +49,7 @@ func NewMemory() *Memory {
 	return &Memory{
 		byID:              map[string]*domain.Account{},
 		byApple:           map[string]*domain.Account{},
+		byGoogle:          map[string]*domain.Account{},
 		byInvite:          map[string]*domain.Account{},
 		friendships:       map[string]*Friendship{},
 		blocks:            map[string]map[string]time.Time{},
@@ -88,6 +91,42 @@ func (m *Memory) UpsertByAppleSubject(appleSubject, nickname string) (*domain.Ac
 	}
 	m.byID[a.ID] = a
 	m.byApple[appleSubject] = a
+	m.byInvite[code] = a
+	return cloneAccount(a), true, nil
+}
+
+func (m *Memory) UpsertByGoogleSubject(googleSubject, nickname string) (*domain.Account, bool, error) {
+	googleSubject = strings.TrimSpace(googleSubject)
+	if googleSubject == "" {
+		return nil, false, fmt.Errorf("google subject required")
+	}
+	m.mu.Lock()
+	defer m.mu.Unlock()
+	if a, ok := m.byGoogle[googleSubject]; ok {
+		if nickname != "" && a.Nickname != nickname {
+			a.Nickname = nickname
+		}
+		return cloneAccount(a), false, nil
+	}
+	if nickname == "" {
+		nickname = "用户"
+	}
+	if len([]rune(nickname)) > 20 {
+		return nil, false, fmt.Errorf("nickname too long")
+	}
+	code, err := randomInviteCode()
+	if err != nil {
+		return nil, false, err
+	}
+	a := &domain.Account{
+		ID:            uuid.NewString(),
+		Nickname:      nickname,
+		GoogleSubject: googleSubject,
+		InviteCode:    code,
+		CreatedAt:     time.Now().UTC(),
+	}
+	m.byID[a.ID] = a
+	m.byGoogle[googleSubject] = a
 	m.byInvite[code] = a
 	return cloneAccount(a), true, nil
 }

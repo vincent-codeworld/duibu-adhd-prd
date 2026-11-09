@@ -13,32 +13,37 @@ import (
 	"github.com/vincent-codeworld/duibu-adhd/backend/internal/ai"
 	"github.com/vincent-codeworld/duibu-adhd/backend/internal/auth"
 	"github.com/vincent-codeworld/duibu-adhd/backend/internal/config"
+	"github.com/vincent-codeworld/duibu-adhd/backend/internal/domain"
 	"github.com/vincent-codeworld/duibu-adhd/backend/internal/httpapi/middleware"
 	"github.com/vincent-codeworld/duibu-adhd/backend/internal/store"
 	"github.com/vincent-codeworld/duibu-adhd/backend/internal/upload"
 )
 
 type Handler struct {
-	cfg           config.Config
-	limiter       *auth.InviteFailLimiter
-	accounts      store.Store
-	disk          *upload.Local
-	aiProvider    ai.Provider
-	appleVerifier *auth.AppleVerifier
+	cfg            config.Config
+	limiter        *auth.InviteFailLimiter
+	accounts       store.Store
+	disk           *upload.Local
+	aiProvider     ai.Provider
+	appleVerifier  *auth.AppleVerifier
+	googleVerifier *auth.GoogleVerifier
 }
 
 func New(cfg config.Config, limiter *auth.InviteFailLimiter, accounts store.Store, disk *upload.Local) *Handler {
 	var apple *auth.AppleVerifier
+	var google *auth.GoogleVerifier
 	if cfg.AuthMode == "apple" {
 		apple = auth.NewAppleVerifier(cfg.AppleAudiences()...)
+		google = auth.NewGoogleVerifier(cfg.GoogleAudiences()...)
 	}
 	return &Handler{
-		cfg:           cfg,
-		limiter:       limiter,
-		accounts:      accounts,
-		disk:          disk,
-		aiProvider:    ai.NewProvider(cfg.AIBaseURL, cfg.AIAPIKey, cfg.AIModel),
-		appleVerifier: apple,
+		cfg:            cfg,
+		limiter:        limiter,
+		accounts:       accounts,
+		disk:           disk,
+		aiProvider:     ai.NewProvider(cfg.AIBaseURL, cfg.AIAPIKey, cfg.AIModel),
+		appleVerifier:  apple,
+		googleVerifier: google,
 	}
 }
 
@@ -86,7 +91,7 @@ func (h *Handler) AuthApple(w http.ResponseWriter, r *http.Request) {
 	nickname := strings.TrimSpace(body.Nickname)
 
 	if h.cfg.AuthMode == "stub" {
-		h.issueForSubject(w, token, nickname)
+		h.issueForAppleSubject(w, token, nickname)
 		return
 	}
 
@@ -105,7 +110,45 @@ func (h *Handler) AuthApple(w http.ResponseWriter, r *http.Request) {
 		})
 		return
 	}
-	h.issueForSubject(w, id.Subject, nickname)
+	h.issueForAppleSubject(w, id.Subject, nickname)
+}
+
+// AuthGoogle: stub mode treats identityToken as a stable Google subject string.
+// apple mode (the non-stub mode) verifies the Google ID token.
+// The account is keyed only by Google sub, never by email or by an Apple subject.
+func (h *Handler) AuthGoogle(w http.ResponseWriter, r *http.Request) {
+	var body struct {
+		IdentityToken string `json:"identityToken"`
+		Nickname      string `json:"nickname,omitempty"`
+	}
+	if err := json.NewDecoder(r.Body).Decode(&body); err != nil || strings.TrimSpace(body.IdentityToken) == "" {
+		writeJSON(w, http.StatusBadRequest, map[string]string{"error": "identityToken required"})
+		return
+	}
+	token := strings.TrimSpace(body.IdentityToken)
+	nickname := strings.TrimSpace(body.Nickname)
+
+	if h.cfg.AuthMode == "stub" {
+		h.issueForGoogleSubject(w, token, nickname)
+		return
+	}
+
+	if h.googleVerifier == nil || !h.googleVerifier.Configured() {
+		writeJSON(w, http.StatusServiceUnavailable, map[string]string{
+			"error": "google_auth_not_configured",
+			"hint":  "set GOOGLE_CLIENT_ID to the iOS OAuth client ID (and optional GOOGLE_CLIENT_IDS)",
+		})
+		return
+	}
+	id, err := h.googleVerifier.Verify(r.Context(), token)
+	if err != nil {
+		writeJSON(w, http.StatusUnauthorized, map[string]string{
+			"error": "invalid_google_token",
+			"hint":  err.Error(),
+		})
+		return
+	}
+	h.issueForGoogleSubject(w, id.Subject, nickname)
 }
 
 // AuthDev is stub-only convenience: POST {"subject":"...","nickname":"..."}.
@@ -122,11 +165,20 @@ func (h *Handler) AuthDev(w http.ResponseWriter, r *http.Request) {
 		writeJSON(w, http.StatusBadRequest, map[string]string{"error": "subject required"})
 		return
 	}
-	h.issueForSubject(w, strings.TrimSpace(body.Subject), strings.TrimSpace(body.Nickname))
+	h.issueForAppleSubject(w, strings.TrimSpace(body.Subject), strings.TrimSpace(body.Nickname))
 }
 
-func (h *Handler) issueForSubject(w http.ResponseWriter, subject, nickname string) {
+func (h *Handler) issueForAppleSubject(w http.ResponseWriter, subject, nickname string) {
 	acc, created, err := h.accounts.UpsertByAppleSubject(subject, nickname)
+	h.writeAuthSession(w, acc, created, err)
+}
+
+func (h *Handler) issueForGoogleSubject(w http.ResponseWriter, subject, nickname string) {
+	acc, created, err := h.accounts.UpsertByGoogleSubject(subject, nickname)
+	h.writeAuthSession(w, acc, created, err)
+}
+
+func (h *Handler) writeAuthSession(w http.ResponseWriter, acc *domain.Account, created bool, err error) {
 	if err != nil {
 		writeJSON(w, http.StatusBadRequest, map[string]string{"error": err.Error()})
 		return

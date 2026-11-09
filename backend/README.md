@@ -4,7 +4,7 @@ ADHD 分步记事本服务端。产品行为以 [PRD](https://github.com/vincent
 
 ## 服务端范围
 
-- Sign in with Apple、账号、邀请码、好友、拉黑
+- Sign in with Apple、Sign in with Google、账号、邀请码、好友、拉黑
 - **已同步**任务 / 阶段 / 奖励 / 验收申请 / 截图元数据
 - 应用内通知、举报（`POST /v1/reports` 薄实现：提交回执「已收到」）
 - AI 拆解 `POST /v1/ai/decompose`（仅 `title` + `notes`；服务端约 8s 预算，超时/非法降级为模板；无 `AI_API_KEY` 时用本地确定性草稿）
@@ -43,7 +43,7 @@ curl -s localhost:8080/v1/tasks -H "Authorization: Bearer $TOKEN" -H 'Content-Ty
 # 重启 API 后再 GET /v1/tasks，任务应还在；内存店则不会。
 ```
 
-OpenAPI：`api/openapi.yaml`（当前 **v0.8.1**）
+OpenAPI：`api/openapi.yaml`（当前 **v0.9.0**）
 
 本地构建请用 Go 1.23+（本机可用 `/Users/vincent/sdk/go1.23.4/bin/go`；1.21 在当前 macOS 上会产生无法运行的二进制）。
 
@@ -58,7 +58,16 @@ curl -s localhost:8080/v1/auth/dev -H 'Content-Type: application/json' \
 curl -s localhost:8080/v1/me -H "Authorization: Bearer <token>"
 ```
 
-`POST /v1/auth/apple` 在 stub 模式下把 `identityToken` 当作稳定 subject。登录**不会**上传仅设备任务。
+`POST /v1/auth/apple` 在 stub 模式下把 `identityToken` 当作稳定 Apple subject。登录**不会**上传仅设备任务。
+
+`POST /v1/auth/google` 在 stub 模式下把 `identityToken` 当作稳定 Google subject（与 Apple 分开存，相同字符串也不会并成同一个账号）：
+
+```bash
+curl -s localhost:8080/v1/auth/google -H 'Content-Type: application/json' \
+  -d '{"identityToken":"google-alice","nickname":"Alice"}'
+```
+
+不需要真实 Google token，也不需要 `GOOGLE_CLIENT_ID`。响应信封与 Apple/dev 相同：`{ accessToken, expiresAt, account, created }`。
 
 ## 真实 Apple 登录（`AUTH_MODE=apple`）
 
@@ -96,6 +105,36 @@ Content-Type: application/json
 **真机冒烟：** 模拟器/真机 Sign in with Apple → App 把 identityToken POST 上来 → `GET /v1/me` 应返回同一账号；二次登录 `created=false`。
 
 `STORE_DRIVER=memory` 重启会清空；默认 Postgres 下账号/任务等会保留。
+
+## 真实 Google 登录（同一 `AUTH_MODE=apple`）
+
+非 stub 模式仍叫 `AUTH_MODE=apple`（历史名称）：这个模式下 Apple 与 Google 都会校验 ID token。未知的 `AUTH_MODE` 值会按原逻辑回落到 stub，所以联调真实 Google 时不要写成 `AUTH_MODE=google`。
+
+1. Google Cloud 里为 iOS 创建 OAuth client（Bundle `com.stepbuddy.app`）。拿到 client ID 后再填 env；在此之前用上面的 stub。
+2. `.env`：
+
+```bash
+AUTH_MODE=apple
+GOOGLE_CLIENT_ID=                 # 必填才会放行 /v1/auth/google：须等于 ID token 的 aud
+GOOGLE_CLIENT_IDS=                # 可选：额外 client ID，逗号分隔（aud 或 azp 与 iOS client 不一致时）
+JWT_SECRET=change-me-in-production
+```
+
+3. 重启 API。App 调用：
+
+```http
+POST /v1/auth/google
+Content-Type: application/json
+
+{"identityToken":"<Google ID token JWT>","nickname":"可选"}
+```
+
+成功：`200` + `{ accessToken, expiresAt, account, created }`（与 Apple 相同信封）。  
+失败：`401 invalid_google_token`；`AUTH_MODE=apple` 但未配 `GOOGLE_CLIENT_ID`：`503 google_auth_not_configured`（不会把随便一个字符串当成已登录）。Apple 未配置时仍是 `503 apple_auth_not_configured`，两个接口互不影响。
+
+校验逻辑：拉 `https://www.googleapis.com/oauth2/v3/certs`，验 RS256 签名；`iss` 必须是 `https://accounts.google.com` 或 `accounts.google.com`；`aud` ∈ `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_IDS`；token 若带 `azp`，`azp` 也必须在这份名单里；`exp` 必填（30 秒时钟偏差）。通过后只按 Google `sub` upsert `google_subject`。
+
+**不会**用 email 把 Google 账号并到 Apple 账号上。同一个 `sub` 字符串分别走 Apple 和 Google，会得到两个账号。`GOOGLE_CLIENT_ID` 是 OAuth client ID，不是密钥；仍然只放在环境变量里，不要写进 git。
 
 ## 模块顺序
 

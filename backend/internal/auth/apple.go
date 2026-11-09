@@ -27,6 +27,7 @@ const (
 var (
 	ErrAppleInvalidToken = errors.New("invalid_apple_token")
 	ErrAppleConfig       = errors.New("apple_auth_not_configured")
+	errKidNotFound       = errors.New("kid_not_found")
 )
 
 // AppleIdentity holds verified claims from an Apple identityToken.
@@ -197,7 +198,7 @@ func (s *JWKSKeySource) PublicKey(ctx context.Context, kid string) (*rsa.PublicK
 	if k := s.cached(kid); k != nil {
 		return k, nil
 	}
-	return nil, fmt.Errorf("%w: kid_not_found", ErrAppleInvalidToken)
+	return nil, fmt.Errorf("%w", errKidNotFound)
 }
 
 func (s *JWKSKeySource) cached(kid string) *rsa.PublicKey {
@@ -303,7 +304,7 @@ type StaticKeySource map[string]*rsa.PublicKey
 func (s StaticKeySource) PublicKey(_ context.Context, kid string) (*rsa.PublicKey, error) {
 	k, ok := s[kid]
 	if !ok {
-		return nil, fmt.Errorf("%w: kid_not_found", ErrAppleInvalidToken)
+		return nil, fmt.Errorf("%w", errKidNotFound)
 	}
 	return k, nil
 }
